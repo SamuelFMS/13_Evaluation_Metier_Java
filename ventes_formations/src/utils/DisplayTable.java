@@ -245,10 +245,15 @@ public class DisplayTable<T extends TableRow> {
      * @return
      */
     private void handleChoice(String choice) {
+        boolean find = false;
         for (Actions action : currentAction) {
             if (choice.equalsIgnoreCase(String.valueOf(action.getKey()))) {
                 action.callRunnable();
+                find = true;
             }
+        }
+        if(!find){
+            isCurrentlyShowing = false;
         }
     }
 
