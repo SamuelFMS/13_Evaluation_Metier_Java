@@ -12,11 +12,11 @@ public class DisplayTable<T extends TableRow> {
     /**
      * Number of item per page
      */
-    private static final int ITEMS_PER_PAGE = 10;
+    private static final int ITEMS_PER_PAGE = 15;
     /**
      * List of data of the table cannot be empty
      */
-    protected final List<T> data;
+    protected List<T> data;
     /**
      * The list of Data corresponding to the search
      */
@@ -26,6 +26,20 @@ public class DisplayTable<T extends TableRow> {
      */
     private int currentPage = 0;
 
+    /**
+     * Custom action
+     */
+    private List<Actions> currentAction = new ArrayList<>();
+
+    /**
+     * Custom action
+     */
+    private List<Actions> customAction = new ArrayList<>();
+
+    /**
+     * Is the table showing
+     */
+    private boolean isCurrentlyShowing;
 
     /**
      * Constructor by an array
@@ -45,6 +59,24 @@ public class DisplayTable<T extends TableRow> {
     public DisplayTable(List<T> data) {
         this.data = data;
         filteredData = this.data;
+    }
+
+    /**
+     * Add custom actions to the base Action
+     *
+     * @param action
+     */
+    public void setActions(List<Actions> action) {
+        this.customAction = action;
+    }
+
+    /**
+     * update the data
+     */
+    public void update(List<T> data) {
+        this.data = data;
+        filteredData = this.data;
+        currentPage = 0;
     }
 
     /**
@@ -96,7 +128,7 @@ public class DisplayTable<T extends TableRow> {
      * @return
      */
     protected List<T> getCurrentPageData() {
-        return filteredData.subList(currentPage * 10, Math.min((currentPage + 1) * 10, filteredData.size()));
+        return filteredData.subList(currentPage * ITEMS_PER_PAGE, Math.min((currentPage + 1) * ITEMS_PER_PAGE, filteredData.size()));
     }
 
     /**
@@ -117,7 +149,7 @@ public class DisplayTable<T extends TableRow> {
         StringBuilder delimiter = new StringBuilder();
         for (int columnIndex = 0; columnIndex < columnName.length; columnIndex++) {
             delimiter.append("+");
-            delimiter.append(StringUtils.repeat("-", sizeColumn[columnIndex] + 2));
+            delimiter.append(StringUtils.repeat("─", sizeColumn[columnIndex] + 2));
         }
         delimiter.append("+");
         System.out.println(delimiter);
@@ -152,15 +184,15 @@ public class DisplayTable<T extends TableRow> {
      * @throws EmptyArrayException
      */
     public String show(Scanner scanner, String text) throws EmptyArrayException {
-        while (true) {
-            displayMenu(text);
+        isCurrentlyShowing = true;
+        String choice = "";
+        while (isCurrentlyShowing) {
+            displayMenu(text, scanner);
 
-            String choice = scanner.next();
-
-            if (handleChoice(choice, scanner)) {
-                return choice.equalsIgnoreCase("Q") ? null : choice;
-            }
+            choice = scanner.next();
+            handleChoice(choice);
         }
+        return choice.equalsIgnoreCase("Q") ? null : choice;
     }
 
     /**
@@ -169,25 +201,30 @@ public class DisplayTable<T extends TableRow> {
      * @param text
      * @throws EmptyArrayException
      */
-    private void displayMenu(String text) throws EmptyArrayException {
+    private void displayMenu(String text, Scanner scanner) throws EmptyArrayException {
         displayTable();
 
         System.out.printf("Page %d sur %d  Total : %d éléments%n", currentPage + 1, getTotalPages(), filteredData.size());
-
+        currentAction = new ArrayList<>();
         if (currentPage + 1 < getTotalPages()) {
-            System.out.print("[N]ext ");
+            currentAction.add(new Actions('N', "Suivant", this::nextPage));
         }
         if (currentPage > 0) {
-            System.out.print("[P]rev ");
+            currentAction.add(new Actions('P', "Précédent", this::previousPage));
         }
 
-        System.out.print("[S]earch ");
-
+        currentAction.add(new Actions('S', "Rechercher", () -> promptSearch(scanner)));
         if (data.size() != filteredData.size()) {
-            System.out.print("[R]eset ");
+            currentAction.add(new Actions('R', "Réinitialiser", this::clearFilter));
         }
+        currentAction.addAll(customAction);
+        currentAction.add(new Actions('Q', "Retour", this::stopShowing));
 
-        System.out.println("[Q]uit");
+        for (Actions action : currentAction) {
+            System.out.print(action.toString());
+        }
+        System.out.println();
+
 
         if (text != null) {
             System.out.println(text);
@@ -195,33 +232,24 @@ public class DisplayTable<T extends TableRow> {
     }
 
     /**
+     * Stop showing the table
+     */
+    private void stopShowing() {
+        isCurrentlyShowing = false;
+    }
+
+    /**
      * Handle the choice
      *
      * @param choice
-     * @param scanner
      * @return
      */
-    private boolean handleChoice(String choice, Scanner scanner) {
-        switch (choice.toUpperCase()) {
-            case "N":
-                nextPage();
-                break;
-            case "P":
-                previousPage();
-                break;
-            case "S":
-                promptSearch(scanner);
-                break;
-            case "R":
-                clearFilter();
-                break;
-            case "Q":
-                return true;
-            default:
-                return true;
+    private void handleChoice(String choice) {
+        for (Actions action : currentAction) {
+            if (choice.equalsIgnoreCase(String.valueOf(action.getKey()))) {
+                action.callRunnable();
+            }
         }
-
-        return false;
     }
 
     /**
