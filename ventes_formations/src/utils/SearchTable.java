@@ -9,11 +9,6 @@ import java.util.Set;
 
 public class SearchTable<T extends TableRow> extends DisplayTable<T> {
     /**
-     * The id of the column to do the search by default the first
-     */
-    private static final int ID_COLUMN_INDEX = 0;
-
-    /**
      * Constructor by array
      *
      * @param data
@@ -33,13 +28,14 @@ public class SearchTable<T extends TableRow> extends DisplayTable<T> {
         validateUniqueIds();
     }
 
+
     /**
      * Check if the id column table doesn't have duplicate item
      */
     private void validateUniqueIds() {
         Set<String> checked = new HashSet<>();
         this.data.forEach(currentToCheck -> {
-            String value = currentToCheck.getRowData()[ID_COLUMN_INDEX].toUpperCase();
+            String value = currentToCheck.getRowData()[currentToCheck.getIdColumnIndex()].toUpperCase();
             if (!checked.add(value)) {
                 throw new IllegalArgumentException("Duplicate item: " + value);
             }
@@ -53,7 +49,7 @@ public class SearchTable<T extends TableRow> extends DisplayTable<T> {
      * @return
      */
     private boolean containsId(String id) {
-        return this.data.stream().anyMatch(maData -> maData.getRowData()[ID_COLUMN_INDEX].equalsIgnoreCase(id));
+        return this.data.stream().anyMatch(maData -> maData.getRowData()[maData.getIdColumnIndex()].equalsIgnoreCase(id));
     }
 
     /**
@@ -74,6 +70,5 @@ public class SearchTable<T extends TableRow> extends DisplayTable<T> {
             }
         } while (!containsId(s));
         return s;
-
     }
 }
