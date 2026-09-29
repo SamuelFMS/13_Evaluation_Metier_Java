@@ -1,16 +1,21 @@
 package dao;
 
+import models.Client;
 import models.User;
+
+import java.util.List;
 
 public interface UserDao {
     /**
      * Check if a pseudonym is already exist return true if the case
+     *
      * @return
      */
     boolean pseudoAlreadyExist(String pseudo);
 
     /**
      * Register a user to the database return true if success return false otherwise
+     *
      * @param username
      * @param password
      * @return
@@ -19,6 +24,7 @@ public interface UserDao {
 
     /**
      * login a user
+     *
      * @param username
      * @param password
      * @return

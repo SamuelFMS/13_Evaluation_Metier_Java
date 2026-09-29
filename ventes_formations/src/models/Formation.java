@@ -37,6 +37,11 @@ public class Formation implements TableRow {
     }
 
     @Override
+    public String toString() {
+        return titleFormation + " -> "+ this.price + "€";
+    }
+
+    @Override
     public String[] getColumnNames() {
         return new String[]{"Titre", "Description", "Nombre de jours", "A Distance", "Prix"};
     }

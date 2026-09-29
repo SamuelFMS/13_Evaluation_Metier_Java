@@ -3,7 +3,6 @@ package views;
 import business.FormationBusiness;
 import business.UserBusiness;
 import exception.EmptyArrayException;
-import models.Client;
 import models.Formation;
 import models.User;
 import utils.Actions;
@@ -48,7 +47,7 @@ public class GuestView {
         }
     }
 
-    public void createAccount(Scanner scanner, UserBusiness userBusiness){
+    public void createAccount(Scanner scanner, UserBusiness userBusiness) {
         System.out.println("Veuillez entrez un login");
         String login = scanner.next();
         System.out.println("Veuillez entrez un mot de passe");
@@ -56,15 +55,15 @@ public class GuestView {
         userBusiness.registerUser(login, password);
     }
 
-    public void login(Scanner scanner, UserBusiness userBusiness, FormationBusiness formationBusiness){
+    public void login(Scanner scanner, UserBusiness userBusiness, FormationBusiness formationBusiness) {
         System.out.println("Veuillez entrez un login");
         String login = scanner.next();
         System.out.println("Veuillez entrez un mot de passe");
         String password = scanner.next();
         User user = userBusiness.tryLogin(login, password);
-        if(user != null){
+        if (user != null) {
             UserView userView = new UserView(user);
-            userView.show(scanner, formationBusiness);
+            userView.show(scanner, formationBusiness, userBusiness);
         }
     }
 
@@ -73,7 +72,7 @@ public class GuestView {
         System.out.println("2- Créer un compte");
         System.out.println("3- Se connecter a un compte");
         System.out.println("0- Stop");
-        Integer choice = InputUtils.readInteger(scanner, 1,3);
+        Integer choice = InputUtils.readInteger(scanner, 1, 3);
         switch (choice) {
             case 0:
                 System.out.println("Ok");
