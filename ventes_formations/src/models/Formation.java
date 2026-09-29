@@ -16,6 +16,16 @@ public class Formation implements TableRow {
     private BigDecimal price;
     private boolean isAvailable;
 
+    public Formation(Formation formation) {
+        this.idFormation = formation.idFormation;
+        this.titleFormation = formation.titleFormation;
+        this.description = formation.description;
+        this.numberOfDays = formation.numberOfDays;
+        this.isRemote = formation.isRemote;
+        this.price = formation.price;
+        this.isAvailable = formation.isAvailable;
+    }
+
     public Formation(int idFormation, String titleFormation, String description, int numberOfDays, boolean isRemote, BigDecimal price, boolean isAvailable) {
         this.idFormation = idFormation;
         this.titleFormation = titleFormation;
