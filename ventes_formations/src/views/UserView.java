@@ -7,12 +7,14 @@ import models.Client;
 import models.Formation;
 import models.FormationItemBasket;
 import models.User;
+import utils.Actions;
 import utils.InputUtils;
 import utils.SearchTable;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -41,7 +43,7 @@ public class UserView {
                     displayBasket = false;
                 } else {
                     int idFormation = Integer.parseInt(idFormationString);
-                    if(basket.stream().anyMatch(formationDeux -> formationDeux.getIdFormation() == idFormation)) {
+                    if (basket.stream().anyMatch(formationDeux -> formationDeux.getIdFormation() == idFormation)) {
                         basket.stream().filter(formation -> formation.getIdFormation() == idFormation).findFirst().ifPresent(basket::remove);
                     } else {
                         availableFormation.stream().filter(formation -> formation.getIdFormation() == idFormation).findFirst().ifPresent(basket::add);
@@ -53,7 +55,7 @@ public class UserView {
         }
     }
 
-    public Client createClient(Scanner scanner, UserBusiness userBusiness){
+    public Client createClient(Scanner scanner, UserBusiness userBusiness) {
         System.out.println("Entrez le prénom");
         String firstName = scanner.next();
         System.out.println("Entrez le nom de famille");
@@ -65,29 +67,53 @@ public class UserView {
         String phonePrefix = "33";
         System.out.println("Entrez le numéro de téléphone");
         String phone = scanner.next();
-        Client client = new Client(null, lastName, firstName,email, address, phone, phonePrefix, userSession);
-        return userBusiness.createClient(client);
+        Client client = new Client(null, lastName, firstName, email, address, phone, phonePrefix, userSession);
+        client = userBusiness.createClient(client);
+        if(client.getIdClient() == null) {
+            throw new RuntimeException("Echec lors de la création du client");
+        }
+        else {
+            System.out.println("le client a bien été crée");
+            return client;
+        }
     }
 
-    public Client getClient(Scanner scanner,  UserBusiness userBusiness){
+    public Client getClient(Scanner scanner, UserBusiness userBusiness) {
         List<Client> clients = userBusiness.getClients(userSession);
-        clients.forEach(System.out::println);
+        try {
+            SearchTable<Client> searchTable = new SearchTable<>(clients);
+            List<Actions> actions = new ArrayList<>();
+            actions.add(new Actions('C', "Créer un Client", () -> clients.add(createClient(scanner, userBusiness))));
+            searchTable.setActions(actions);
+            String idClient = searchTable.show(scanner, "Entrez l'id d'un client");
+            if (idClient == null) {
+                return null;
+            }else {
+                Optional<Client> client = clients.stream().filter(c -> c.getIdClient() == Integer.parseInt(idClient)).findFirst();
 
-        Client client = createClient(scanner, userBusiness);
-        return client;
+                return client.orElseGet(() -> createClient(scanner, userBusiness));
+            }
+
+
+        } catch (EmptyArrayException e) {
+            System.out.println("Aucune client, création d'un client");
+            return createClient(scanner, userBusiness);
+        }
+
+
     }
 
-    public void payBasket(Scanner scanner, UserBusiness userBusiness){
+    public void payBasket(Scanner scanner, UserBusiness userBusiness) {
         System.out.println("Récapitulatif: ");
         for (Formation formation : basket) {
             System.out.println(formation);
         }
-        System.out.println("Prix totale: " +     basket.stream()
-                .map(Formation::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
+        System.out.println("Prix totale: " + basket.stream().map(Formation::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
 
-        getClient(scanner,userBusiness);
+        Client client = getClient(scanner, userBusiness);
+        if(client != null) {
 
+        }
     }
 
     public void show(Scanner scanner, FormationBusiness formationBusiness, UserBusiness userBusiness) {

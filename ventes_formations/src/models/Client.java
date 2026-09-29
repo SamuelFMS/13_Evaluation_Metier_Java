@@ -2,12 +2,13 @@ package models;
 
 import lombok.Getter;
 import lombok.Setter;
+import utils.TableRow;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-public class Client {
+public class Client implements TableRow {
     Integer idClient;
     String lastName;
     String firstName;
@@ -44,5 +45,15 @@ public class Client {
                 ", numberPhonePrefix='" + numberPhonePrefix + '\'' +
                 ", user=" + user +
                 '}';
+    }
+
+    @Override
+    public String[] getColumnNames() {
+        return new String[]{"id", "prénom", "nom", "email"};
+    }
+
+    @Override
+    public String[] getRowData() {
+        return new String[]{String.valueOf(idClient), firstName, lastName, email};
     }
 }
