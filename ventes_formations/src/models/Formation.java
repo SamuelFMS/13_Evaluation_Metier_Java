@@ -2,11 +2,12 @@ package models;
 
 import lombok.Getter;
 import lombok.Setter;
+import utils.TableRow;
 
 import java.math.BigDecimal;
 
 @Getter @Setter
-public class Formation {
+public class Formation implements TableRow {
     private int idFormation;
     private String titleFormation;
     private String description;
@@ -23,5 +24,15 @@ public class Formation {
         this.isRemote = isRemote;
         this.price = price;
         this.isAvailable = isAvailable;
+    }
+
+    @Override
+    public String[] getColumnNames() {
+        return new String[]{"Titre", "Description", "Nombre de jours", "A Distance", "Prix"};
+    }
+
+    @Override
+    public String[] getRowData() {
+        return new String[]{titleFormation, description, String.valueOf(numberOfDays), isRemote?"Oui": "Non", String.valueOf(price)};
     }
 }
