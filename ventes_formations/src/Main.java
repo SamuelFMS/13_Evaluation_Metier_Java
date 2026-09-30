@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        try(Scanner scanner = new Scanner(System.in)) {
+        try (Scanner scanner = new Scanner(System.in)) {
             FormationBusiness formationBusiness = new FormationBusiness();
             UserBusiness userBusiness = new UserBusiness();
             GuestView guestView = new GuestView();

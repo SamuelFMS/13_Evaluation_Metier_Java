@@ -4,19 +4,17 @@ import config.DataBaseConfig;
 import models.Formation;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 
 public class FormationDaoImpl implements FormationDao, Dao<Formation> {
     @Override
     public List<Formation> findAllAvailable() {
         String sql = "SELECT * FROM formation WHERE is_available = true";
-        try (Connection connection = DataBaseConfig.getConnection()){
+        try (Connection connection = DataBaseConfig.getConnection()) {
             return selectAll(connection, sql);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }

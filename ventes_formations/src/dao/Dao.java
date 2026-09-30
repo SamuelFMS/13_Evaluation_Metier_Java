@@ -9,10 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface Dao<T> {
-    default List<T> selectAll(Connection connection, PreparedStatement preparedStatement){
+    /**
+     * Default request to get all the Elements T
+     *
+     * @param connection
+     * @param preparedStatement
+     * @return
+     */
+    default List<T> selectAll(Connection connection, PreparedStatement preparedStatement) {
         List<T> resultList = new ArrayList<>();
-        try(ResultSet resultSet = preparedStatement.executeQuery()) {
-            while (resultSet.next()){
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
                 resultList.add(mapRow(resultSet));
             }
         } catch (SQLException e) {
@@ -21,9 +28,16 @@ public interface Dao<T> {
         return resultList;
     }
 
-    default List<T> selectAll(Connection connection, String sqlRequest){
+    /**
+     * Default request to get all the Elements T but with a statement no prepared
+     *
+     * @param connection
+     * @param sqlRequest
+     * @return
+     */
+    default List<T> selectAll(Connection connection, String sqlRequest) {
         List<T> resultList = new ArrayList<>();
-        try(Statement statement = connection.createStatement()){
+        try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sqlRequest)) {
                 while (resultSet.next()) {
                     resultList.add(mapRow(resultSet));
@@ -35,5 +49,12 @@ public interface Dao<T> {
         return resultList;
     }
 
-    abstract T mapRow(ResultSet rs) throws SQLException;
+    /**
+     * Convert the ResultSet to the object corresponding
+     *
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
+    T mapRow(ResultSet rs) throws SQLException;
 }

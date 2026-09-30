@@ -4,20 +4,54 @@ import lombok.Getter;
 import lombok.Setter;
 import utils.TableRow;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Getter @Setter
+@Getter
+@Setter
 public class Client implements TableRow {
+    /**
+     * Id of the client in the database
+     */
     Integer idClient;
+    /**
+     * Last name of the client
+     */
     String lastName;
+    /**
+     * First name of the cient
+     */
     String firstName;
+    /**
+     * Email of the client
+     */
     String email;
+    /**
+     * Address of the client
+     */
     String address;
+    /**
+     * Number phone of the client
+     */
     String numberPhone;
+    /**
+     * Number phone prefix of the client
+     */
     String numberPhonePrefix;
+    /**
+     * User assign to the client
+     */
     User user;
 
+    /**
+     * Default constructor
+     *
+     * @param idClient
+     * @param lastName
+     * @param firstName
+     * @param email
+     * @param address
+     * @param numberPhone
+     * @param numberPhonePrefix
+     * @param user
+     */
     public Client(Integer idClient, String lastName, String firstName, String email, String address, String numberPhone, String numberPhonePrefix, User user) {
         this.idClient = idClient;
         this.lastName = lastName;
@@ -27,10 +61,6 @@ public class Client implements TableRow {
         this.numberPhone = numberPhone;
         this.numberPhonePrefix = numberPhonePrefix;
         this.user = user;
-    }
-
-    public List<Order> getOrders(){
-        return new ArrayList<>();
     }
 
     @Override

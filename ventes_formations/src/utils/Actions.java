@@ -4,11 +4,6 @@ import lombok.Getter;
 
 public class Actions {
     /**
-     * Key to press to activate the action
-     */
-    @Getter
-    private char key;
-    /**
      * Display information about this action
      */
     private final String val;
@@ -16,9 +11,15 @@ public class Actions {
      * Method called when the action is executed
      */
     private final Runnable action;
+    /**
+     * Key to press to activate the action
+     */
+    @Getter
+    private char key;
 
     /**
      * Constructor
+     *
      * @param key
      * @param val
      * @param action
@@ -32,16 +33,17 @@ public class Actions {
     /**
      * Execute the actions
      */
-    public void callRunnable(){
+    public void callRunnable() {
         action.run();
     }
 
     /**
      * Print the action ex: [S]Rechercher
+     *
      * @return
      */
     @Override
     public String toString() {
-        return "["+key+"]"+val + " ";
+        return "[" + key + "]" + val + " ";
     }
 }

@@ -22,9 +22,20 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class UserView {
+    /**
+     * current basket
+     */
     private final List<Formation> basket;
+    /**
+     * User log in
+     */
     private User userSession;
 
+    /**
+     * Constructor
+     *
+     * @param userSession
+     */
     public UserView(User userSession) {
         if (userSession.getLogin() == null) {
             throw new NullPointerException("Login is null");
@@ -33,8 +44,13 @@ public class UserView {
         basket = new ArrayList<>();
     }
 
-
-    public void addToBasket(Scanner scanner, FormationBusiness formationBusiness) {
+    /**
+     * Manage item in the basket add or delete the item of the basket
+     *
+     * @param scanner
+     * @param formationBusiness
+     */
+    public void manageBasket(Scanner scanner, FormationBusiness formationBusiness) {
         List<Formation> availableFormation = formationBusiness.getAllAvailableFormation();
         boolean displayBasket = true;
         while (displayBasket) {
@@ -58,6 +74,13 @@ public class UserView {
         }
     }
 
+    /**
+     * Create a client
+     *
+     * @param scanner
+     * @param userBusiness
+     * @return
+     */
     public Client createClient(Scanner scanner, UserBusiness userBusiness) {
         System.out.println("Entrez le prénom");
         String firstName = scanner.next();
@@ -72,15 +95,21 @@ public class UserView {
         String phone = scanner.next();
         Client client = new Client(null, lastName, firstName, email, address, phone, phonePrefix, userSession);
         client = userBusiness.createClient(client);
-        if(client.getIdClient() == null) {
+        if (client.getIdClient() == null) {
             throw new RuntimeException("Echec lors de la création du client");
-        }
-        else {
+        } else {
             System.out.println("le client a bien été crée");
             return client;
         }
     }
 
+    /**
+     * Get a client or make one or cancel
+     *
+     * @param scanner
+     * @param userBusiness
+     * @return
+     */
     public Client getClient(Scanner scanner, UserBusiness userBusiness) {
         List<Client> clients = userBusiness.getClients(userSession);
         try {
@@ -91,7 +120,7 @@ public class UserView {
             String idClient = searchTable.show(scanner, "Entrez l'id d'un client");
             if (idClient == null) {
                 return null;
-            }else {
+            } else {
                 Optional<Client> client = clients.stream().filter(c -> c.getIdClient() == Integer.parseInt(idClient)).findFirst();
 
                 return client.orElseGet(() -> createClient(scanner, userBusiness));
@@ -106,6 +135,13 @@ public class UserView {
 
     }
 
+    /**
+     * Pay the basket and assign to a client
+     *
+     * @param scanner
+     * @param userBusiness
+     * @param formationBusiness
+     */
     public void payBasket(Scanner scanner, UserBusiness userBusiness, FormationBusiness formationBusiness) {
         System.out.println("Récapitulatif: ");
         for (Formation formation : basket) {
@@ -114,12 +150,12 @@ public class UserView {
         System.out.println("Prix totale: " + basket.stream().map(Formation::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
 
         Client client = getClient(scanner, userBusiness);
-        if(client != null) {
+        if (client != null) {
             System.out.println("Etes vous sur de vouloir mettre les formations au client " + client.getFirstName() + " (y/n): ");
-            if(InputUtils.readBoolean(scanner)){
+            if (InputUtils.readBoolean(scanner)) {
                 Order order = new Order(null, LocalDate.now(), userSession, client);
                 basket.forEach(formation -> order.addContain(new Contain(order, formation, formation.getPrice())));
-                if(formationBusiness.orderFormation(order)){
+                if (formationBusiness.orderFormation(order)) {
                     System.out.println("Formation enregistrer avec succes");
                 } else {
                     System.out.println("Une erreur c'est produite");
@@ -128,6 +164,13 @@ public class UserView {
         }
     }
 
+    /**
+     * Display the user
+     *
+     * @param scanner
+     * @param formationBusiness
+     * @param userBusiness
+     */
     public void show(Scanner scanner, FormationBusiness formationBusiness, UserBusiness userBusiness) {
         System.out.println("Bonjour " + userSession.getLogin());
         while (userSession != null) {
@@ -139,7 +182,7 @@ public class UserView {
                     userSession = null;
                     break;
                 case 1:
-                    addToBasket(scanner, formationBusiness);
+                    manageBasket(scanner, formationBusiness);
                     break;
                 case 2:
                     payBasket(scanner, userBusiness, formationBusiness);

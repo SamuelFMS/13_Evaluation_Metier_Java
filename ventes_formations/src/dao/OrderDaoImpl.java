@@ -32,7 +32,7 @@ public class OrderDaoImpl implements OrderDao, Dao<Order> {
             preparedStatement.setInt(2, order.getUser().getIdUser());
             preparedStatement.setInt(3, order.getClient().getIdClient());
             preparedStatement.executeUpdate();
-            try(ResultSet resultSet = preparedStatement.getGeneratedKeys()){
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                 if (resultSet.next()) {
                     int id = resultSet.getInt(1);
                     order.setIdOrder(id);

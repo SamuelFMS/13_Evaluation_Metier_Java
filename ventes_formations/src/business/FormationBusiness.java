@@ -1,7 +1,6 @@
 package business;
 
 import config.DataBaseConfig;
-import dao.ContainDao;
 import dao.ContainDaoImpl;
 import dao.FormationDaoImpl;
 import dao.OrderDaoImpl;
@@ -14,16 +13,36 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class FormationBusiness {
+    /**
+     * Formation DAO
+     */
     private static final FormationDaoImpl formationDao = new FormationDaoImpl();
+    /**
+     * Order dao
+     */
     private static final OrderDaoImpl orderDao = new OrderDaoImpl();
+    /**
+     * Contain dao
+     */
     private static final ContainDaoImpl containDao = new ContainDaoImpl();
 
-    public List<Formation> getAllAvailableFormation(){
+    /**
+     * Find all the formation that are available to order
+     *
+     * @return
+     */
+    public List<Formation> getAllAvailableFormation() {
         return formationDao.findAllAvailable();
     }
 
+    /**
+     * Order a formation
+     *
+     * @param order
+     * @return
+     */
     public boolean orderFormation(Order order) {
-        try(Connection connection = DataBaseConfig.getConnection()){
+        try (Connection connection = DataBaseConfig.getConnection()) {
             connection.setAutoCommit(false);
             try {
                 boolean success = true;

@@ -6,16 +6,43 @@ import utils.TableRow;
 
 import java.math.BigDecimal;
 
-@Getter @Setter
+@Getter
+@Setter
 public class Formation implements TableRow {
+    /**
+     * id of the formation in the batabase null otherwise
+     */
     private int idFormation;
+    /**
+     * Title of the formation
+     */
     private String titleFormation;
+    /**
+     * Description of the formation
+     */
     private String description;
+    /**
+     * Number of days the formation is
+     */
     private int numberOfDays;
+    /**
+     * Is it remote ?
+     */
     private boolean isRemote;
+    /**
+     * Price to buy the formation
+     */
     private BigDecimal price;
+    /**
+     * Is it available to buy ?
+     */
     private boolean isAvailable;
 
+    /**
+     * Constructor by the object for the Formation Item Basket
+     *
+     * @param formation
+     */
     public Formation(Formation formation) {
         this.idFormation = formation.idFormation;
         this.titleFormation = formation.titleFormation;
@@ -26,6 +53,17 @@ public class Formation implements TableRow {
         this.isAvailable = formation.isAvailable;
     }
 
+    /**
+     * Default constructor
+     *
+     * @param idFormation
+     * @param titleFormation
+     * @param description
+     * @param numberOfDays
+     * @param isRemote
+     * @param price
+     * @param isAvailable
+     */
     public Formation(int idFormation, String titleFormation, String description, int numberOfDays, boolean isRemote, BigDecimal price, boolean isAvailable) {
         this.idFormation = idFormation;
         this.titleFormation = titleFormation;
@@ -38,7 +76,7 @@ public class Formation implements TableRow {
 
     @Override
     public String toString() {
-        return titleFormation + " -> "+ this.price + "€";
+        return titleFormation + " -> " + this.price + "€";
     }
 
     @Override
@@ -48,6 +86,6 @@ public class Formation implements TableRow {
 
     @Override
     public String[] getRowData() {
-        return new String[]{titleFormation, description, String.valueOf(numberOfDays), isRemote?"Oui": "Non", String.valueOf(price)};
+        return new String[]{titleFormation, description, String.valueOf(numberOfDays), isRemote ? "Oui" : "Non", String.valueOf(price)};
     }
 }

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 public interface ContainDao {
     /**
      * Create a contain in the database
+     *
      * @param connection
      * @param contain
      * @return

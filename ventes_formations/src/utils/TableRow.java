@@ -14,7 +14,7 @@ public interface TableRow {
     /**
      * The id of the column to do the search by default the first
      */
-    default int getIdColumnIndex(){
+    default int getIdColumnIndex() {
         return 0;
     }
 }

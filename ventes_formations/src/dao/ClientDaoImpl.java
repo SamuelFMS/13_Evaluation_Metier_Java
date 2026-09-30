@@ -15,8 +15,8 @@ public class ClientDaoImpl implements ClientDao, Dao<Client> {
     @Override
     public Client createClient(Client client) {
         String sql = "INSERT INTO client(last_name, first_name, email, address, number_phone, number_phone_prefix, id_user) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try(Connection connection = DataBaseConfig.getConnection()){
-            try(PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+        try (Connection connection = DataBaseConfig.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, client.getLastName());
                 preparedStatement.setString(2, client.getFirstName());
                 preparedStatement.setString(3, client.getEmail());
@@ -26,7 +26,7 @@ public class ClientDaoImpl implements ClientDao, Dao<Client> {
                 preparedStatement.setInt(7, client.getUser().getIdUser());
                 preparedStatement.executeUpdate();
 
-                try(ResultSet resultSet = preparedStatement.getGeneratedKeys()){
+                try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                     if (resultSet.next()) {
                         int id = resultSet.getInt(1);
                         client.setIdClient(id);
@@ -42,8 +42,8 @@ public class ClientDaoImpl implements ClientDao, Dao<Client> {
     @Override
     public List<Client> getClientsForUser(User user) {
         String sql = "SELECT * FROM client WHERE id_user = ?";
-        try(Connection connection = DataBaseConfig.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (Connection connection = DataBaseConfig.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, user.getIdUser());
                 return selectAll(connection, preparedStatement);
             }
@@ -54,6 +54,6 @@ public class ClientDaoImpl implements ClientDao, Dao<Client> {
 
     @Override
     public Client mapRow(ResultSet rs) throws SQLException {
-        return new Client(rs.getInt("id_client"), rs.getString("last_name"), rs.getString("first_name"),rs.getString("email"), rs.getString("address"), rs.getString("number_phone"), rs.getString("number_phone_prefix"), null);
+        return new Client(rs.getInt("id_client"), rs.getString("last_name"), rs.getString("first_name"), rs.getString("email"), rs.getString("address"), rs.getString("number_phone"), rs.getString("number_phone_prefix"), null);
     }
 }

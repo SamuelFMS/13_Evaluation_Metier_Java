@@ -8,6 +8,7 @@ import java.util.List;
 public interface ClientDao {
     /**
      * Return the list of client that belong to the user
+     *
      * @param user
      * @return
      */

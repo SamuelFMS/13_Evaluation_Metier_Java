@@ -252,7 +252,7 @@ public class DisplayTable<T extends TableRow> {
                 find = true;
             }
         }
-        if(!find){
+        if (!find) {
             isCurrentlyShowing = false;
         }
     }

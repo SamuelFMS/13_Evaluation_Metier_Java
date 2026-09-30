@@ -1,9 +1,6 @@
 package dao;
 
-import models.Client;
 import models.User;
-
-import java.util.List;
 
 public interface UserDao {
     /**

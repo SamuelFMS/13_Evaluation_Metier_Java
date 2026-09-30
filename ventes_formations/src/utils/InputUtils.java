@@ -5,27 +5,43 @@ import validation.Validator;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-public interface InputUtils {
-    static boolean readBoolean(Scanner scanner){
+public class InputUtils {
+    private InputUtils() {
+        /* This utility class should not be instantiated */
+    }
+
+    /**
+     * Read a boolean and return it yes or no y/n
+     *
+     * @param scanner
+     * @return
+     */
+    public static boolean readBoolean(Scanner scanner) {
         boolean result = false;
         boolean isInputValid = false;
         while (!isInputValid) {
             String input = scanner.next();
-            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
+            if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
                 isInputValid = true;
                 result = true;
-            }
-            else if (input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")) {
+            } else if (input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")) {
                 isInputValid = true;
-            }
-            else{
+            } else {
                 System.out.println("Saisie incorrecte (y/n) attendus");
             }
         }
         return result;
     }
 
-    static Integer readInteger(Scanner scan, int min, int max) {
+    /**
+     * Read an integer between min and max
+     *
+     * @param scan
+     * @param min
+     * @param max
+     * @return
+     */
+    public static Integer readInteger(Scanner scan, int min, int max) {
         Integer number = null;
         boolean isInputValid = false;
         do {
@@ -43,12 +59,20 @@ public interface InputUtils {
         return number;
     }
 
-    static String readMatchingRegex(Scanner scanner, String regex, String errorMessage){
+    /**
+     * Read the input and must match the following regex
+     *
+     * @param scanner
+     * @param regex
+     * @param errorMessage
+     * @return
+     */
+    public static String readMatchingRegex(Scanner scanner, String regex, String errorMessage) {
         boolean isInputValid = false;
         String res = "";
-        while(!isInputValid){
+        while (!isInputValid) {
             res = scanner.next();
-            if(res.matches(regex)){
+            if (res.matches(regex)) {
                 isInputValid = true;
             } else {
                 System.out.println(errorMessage);
@@ -57,23 +81,35 @@ public interface InputUtils {
         return res;
     }
 
-    static String readNonEmptyLine(Scanner scanner) {
-        String res = scanner.nextLine();
+    /**
+     * Get a non empty Line of input
+     *
+     * @param scanner
+     * @return
+     */
+    public static String readNonEmptyLine(Scanner scanner) {
+        String res = scanner.nextLine(); // empty previous scanner.next that leave a \n
         while (res.isEmpty()) {
             res = scanner.nextLine();
-            if(res.isEmpty()) {
+            if (res.isEmpty()) {
                 System.out.println("La chaine ne peux pas etre vide");
             }
         }
         return res;
     }
 
-    static BigDecimal readMoney(Scanner scanner) {
+    /**
+     * Get a valid input of money
+     *
+     * @param scanner
+     * @return
+     */
+    public static BigDecimal readMoney(Scanner scanner) {
         BigDecimal res = BigDecimal.ZERO;
         boolean isInputValid = false;
-        while(!isInputValid) {
+        while (!isInputValid) {
             String str = scanner.next();
-            if(Validator.isAValidDecimal(str)) {
+            if (Validator.isAValidDecimal(str)) {
                 try {
                     res = new BigDecimal(str);
                     isInputValid = true;
