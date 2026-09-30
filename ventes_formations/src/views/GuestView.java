@@ -100,6 +100,9 @@ public class GuestView {
             UserView userView = new UserView(user);
             userView.show(scanner, formationBusiness, userBusiness);
         }
+        else{
+            System.out.println("Erreur impossible de se connecter utilisateur/mdp incorrecte");
+        }
     }
 
     /**
