@@ -4,14 +4,17 @@ import business.FormationBusiness;
 import business.UserBusiness;
 import exception.EmptyArrayException;
 import models.Client;
+import models.Contain;
 import models.Formation;
 import models.FormationItemBasket;
+import models.Order;
 import models.User;
 import utils.Actions;
 import utils.InputUtils;
 import utils.SearchTable;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -103,7 +106,7 @@ public class UserView {
 
     }
 
-    public void payBasket(Scanner scanner, UserBusiness userBusiness) {
+    public void payBasket(Scanner scanner, UserBusiness userBusiness, FormationBusiness formationBusiness) {
         System.out.println("Récapitulatif: ");
         for (Formation formation : basket) {
             System.out.println(formation);
@@ -112,7 +115,16 @@ public class UserView {
 
         Client client = getClient(scanner, userBusiness);
         if(client != null) {
-
+            System.out.println("Etes vous sur de vouloir mettre les formations au client " + client.getFirstName() + " (y/n): ");
+            if(InputUtils.readBoolean(scanner)){
+                Order order = new Order(null, LocalDate.now(), userSession, client);
+                basket.forEach(formation -> order.addContain(new Contain(order, formation, formation.getPrice())));
+                if(formationBusiness.orderFormation(order)){
+                    System.out.println("Formation enregistrer avec succes");
+                } else {
+                    System.out.println("Une erreur c'est produite");
+                }
+            }
         }
     }
 
@@ -130,7 +142,7 @@ public class UserView {
                     addToBasket(scanner, formationBusiness);
                     break;
                 case 2:
-                    payBasket(scanner, userBusiness);
+                    payBasket(scanner, userBusiness, formationBusiness);
                     break;
                 default:
                     System.out.println("default");

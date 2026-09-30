@@ -14,27 +14,21 @@ public class Order {
     LocalDate orderDate;
     User user;
     Client client;
+    List<Contain> contains;
 
     public Order(Integer idOrder, LocalDate orderDate, User user, Client client) {
         this.idOrder = idOrder;
         this.orderDate = orderDate;
         this.user = user;
         this.client = client;
-    }
-
-    public List<Formation> getFormations(){
-        return new ArrayList<>();
+        this.contains = new ArrayList<>();
     }
 
     public BigDecimal getTotalPrice(){
         return BigDecimal.ZERO;
     }
 
-    public boolean addFormation(Formation formation) {
-        return false;
-    }
-
-    public boolean removeFormation(Formation formation) {
-        return false;
+    public void addContain(Contain contain) {
+        this.contains.add(contain);
     }
 }
