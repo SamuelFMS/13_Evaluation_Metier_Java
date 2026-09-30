@@ -67,7 +67,17 @@ public class GuestView {
      */
     public void createAccount(Scanner scanner, UserBusiness userBusiness) {
         System.out.println("Veuillez entrez un login");
-        String login = scanner.next();
+        String login = "";
+        boolean validLogin = false;
+        do {
+            login = scanner.next();
+            if (login.length() <= 3) {
+                System.out.println("Veuillez entrez un login plus long");
+            } else {
+                validLogin = true;
+            }
+        } while (!validLogin);
+
         System.out.println("Veuillez entrez un mot de passe");
         String password = scanner.next();
         userBusiness.registerUser(login, password);
