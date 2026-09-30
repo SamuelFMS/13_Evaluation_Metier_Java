@@ -106,7 +106,7 @@ public class GuestView {
         System.out.println("0- Stop");
         Integer choice;
         do {
-            choice = InputUtils.readInteger(scanner, 1, 3);
+            choice = InputUtils.readInteger(scanner, 0, 3);
             switch (choice) {
                 case 0:
                     System.out.println("Ok");
