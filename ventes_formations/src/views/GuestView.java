@@ -113,12 +113,12 @@ public class GuestView {
      * @param userBusiness
      */
     public void show(Scanner scanner, FormationBusiness formationBusiness, UserBusiness userBusiness) {
-        System.out.println("1- Afficher les formations");
-        System.out.println("2- Créer un compte");
-        System.out.println("3- Se connecter a un compte");
-        System.out.println("0- Stop");
         Integer choice;
         do {
+            System.out.println("1- Afficher les formations");
+            System.out.println("2- Créer un compte");
+            System.out.println("3- Se connecter a un compte");
+            System.out.println("0- Stop");
             choice = InputUtils.readInteger(scanner, 0, 3);
             switch (choice) {
                 case 0:
