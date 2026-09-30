@@ -55,7 +55,7 @@ public class GuestView {
         try {
             displayTable.show(scanner, null);
         } catch (EmptyArrayException e) {
-            throw new RuntimeException(e);
+           System.out.println("Aucune formation trouvé");
         }
     }
 
