@@ -144,6 +144,10 @@ public class UserView {
      */
     public void payBasket(Scanner scanner, UserBusiness userBusiness, FormationBusiness formationBusiness) {
         System.out.println("Récapitulatif: ");
+        if(basket.isEmpty()){
+            System.out.println("Impossible panier vide");
+            return;
+        }
         for (Formation formation : basket) {
             System.out.println(formation);
         }
@@ -155,10 +159,14 @@ public class UserView {
             if (InputUtils.readBoolean(scanner)) {
                 Order order = new Order(null, LocalDate.now(), userSession, client);
                 basket.forEach(formation -> order.addContain(new Contain(order, formation, formation.getPrice())));
-                if (formationBusiness.orderFormation(order)) {
-                    System.out.println("Formation enregistrer avec succes");
-                } else {
-                    System.out.println("Une erreur c'est produite");
+                try {
+                    if (formationBusiness.orderFormation(order)) {
+                        System.out.println("Formation enregistrer avec succes");
+                    } else {
+                        System.out.println("Une erreur c'est produite");
+                    }
+                } catch (EmptyArrayException e) {
+                    System.out.println("Panier vide impossible");
                 }
             }
         }

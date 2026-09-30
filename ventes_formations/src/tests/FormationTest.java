@@ -1,9 +1,9 @@
 package tests;
 
 import business.FormationBusiness;
-import business.UserBusiness;
 import config.DataBaseConfig;
 import models.Client;
+import models.Contain;
 import models.Formation;
 import models.Order;
 import models.User;
@@ -13,9 +13,11 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 public class FormationTest {
     private final FormationBusiness formationBusiness = new FormationBusiness();
-    private final UserBusiness userBusiness = new UserBusiness();
 
     @Before
     public void init() {
@@ -34,7 +36,10 @@ public class FormationTest {
         User user = new User(1, null);
         Client client = new Client(1, null, null, null, null, null, null, null);
         Order order = new Order(null, LocalDate.now(), user, client);
-        assert formationBusiness.orderFormation(order);
+        Formation formation = formationBusiness.getAllAvailableFormation().get(0);
+        Contain contain = new Contain(order, formation, formation.getPrice());
+        order.addContain(contain);
+        assertDoesNotThrow(() -> assertTrue(formationBusiness.orderFormation(order)));
         assert order.getIdOrder() != null;
     }
 }

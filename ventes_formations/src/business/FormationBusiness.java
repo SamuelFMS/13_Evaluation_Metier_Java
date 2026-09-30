@@ -4,6 +4,7 @@ import config.DataBaseConfig;
 import dao.ContainDaoImpl;
 import dao.FormationDaoImpl;
 import dao.OrderDaoImpl;
+import exception.EmptyArrayException;
 import models.Contain;
 import models.Formation;
 import models.Order;
@@ -41,7 +42,10 @@ public class FormationBusiness {
      * @param order
      * @return
      */
-    public boolean orderFormation(Order order) {
+    public boolean orderFormation(Order order) throws EmptyArrayException {
+        if(order.getContains().isEmpty()) {
+            throw new EmptyArrayException();
+        }
         try (Connection connection = DataBaseConfig.getConnection()) {
             connection.setAutoCommit(false);
             try {
