@@ -4,6 +4,7 @@ config
 dao
 exception
 models
+tests
 utils
-validation
+validations
 views
