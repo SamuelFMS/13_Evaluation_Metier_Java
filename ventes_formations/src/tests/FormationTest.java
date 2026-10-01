@@ -16,14 +16,26 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+/**
+ * Test Class for the Training Business
+ */
 public class FormationTest {
+    /**
+     * Business training courses to try out
+     */
     private final FormationBusiness formationBusiness = new FormationBusiness();
 
+    /**
+     * Before test execution
+     */
     @Before
     public void init() {
         DataBaseConfig.setConnetion("jdbc:mariadb://localhost:3306/test_vente_de_formation", "root", null);
     }
 
+    /**
+     * Test of method get all available formation
+     */
     @Test
     public void testGetAllAvailableFormation() {
         List<Formation> formations = formationBusiness.getAllAvailableFormation();
@@ -31,6 +43,9 @@ public class FormationTest {
         assert !formations.isEmpty();
     }
 
+    /**
+     * Test of method order a formation
+     */
     @Test
     public void testOrderFormation() {
         User user = new User(1, null);

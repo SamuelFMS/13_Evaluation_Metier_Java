@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * Class to display a table
+ *
+ * @param <T>
+ */
 public class DisplayTable<T extends TableRow> {
     /**
      * Number of item per page

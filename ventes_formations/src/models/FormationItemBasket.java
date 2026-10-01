@@ -1,5 +1,8 @@
 package models;
 
+/**
+ * Model FormationItemBasket contain all the informations of the Formation and add a column of selected
+ */
 public class FormationItemBasket extends Formation {
     /**
      * Is the item in the basket ?

@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import utils.TableRow;
 
+/**
+ * Model Client contain all the informations of the Client
+ */
 @Getter
 @Setter
 public class Client implements TableRow {

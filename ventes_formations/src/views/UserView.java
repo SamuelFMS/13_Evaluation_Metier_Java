@@ -21,6 +21,9 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * Class to display an login User
+ */
 public class UserView {
     /**
      * current basket
@@ -144,7 +147,7 @@ public class UserView {
      */
     public void payBasket(Scanner scanner, UserBusiness userBusiness, FormationBusiness formationBusiness) {
         System.out.println("Récapitulatif: ");
-        if(basket.isEmpty()){
+        if (basket.isEmpty()) {
             System.out.println("Impossible panier vide");
             return;
         }

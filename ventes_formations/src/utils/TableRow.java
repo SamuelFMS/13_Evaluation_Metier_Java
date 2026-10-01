@@ -1,5 +1,8 @@
 package utils;
 
+/**
+ * Interface to become a table
+ */
 public interface TableRow {
     /**
      * Returns the column headers.

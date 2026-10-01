@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+/**
+ * Model Contain contain all the informations of the Contain
+ */
 @Getter
 @Setter
 public class Contain {

@@ -1,10 +1,13 @@
 package utils;
 
-import validation.Validator;
+import validations.Validator;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
 
+/**
+ * Class for verification of User input
+ */
 public class InputUtils {
     private InputUtils() {
         /* This utility class should not be instantiated */

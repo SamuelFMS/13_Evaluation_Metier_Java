@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * table order sql request
+ */
 public class OrderDaoImpl implements OrderDao, Dao<Order> {
 
     @Override

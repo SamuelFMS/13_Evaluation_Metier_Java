@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Database configuration
+ */
 @Getter
 public class DataBaseConfig {
     /**

@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Table Contain sql request
+ */
 public class ContainDaoImpl implements ContainDao, Dao<Contain> {
 
     public boolean createContain(Connection connection, Contain contain) throws SQLException {

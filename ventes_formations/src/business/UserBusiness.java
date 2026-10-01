@@ -11,6 +11,9 @@ import models.User;
 
 import java.util.List;
 
+/**
+ * Business class managing User and Client creation.
+ */
 public class UserBusiness {
     /**
      * User dao

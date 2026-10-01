@@ -5,6 +5,9 @@ import models.User;
 
 import java.util.List;
 
+/**
+ * Interface of SQL request for table client
+ */
 public interface ClientDao {
     /**
      * Return the list of client that belong to the user

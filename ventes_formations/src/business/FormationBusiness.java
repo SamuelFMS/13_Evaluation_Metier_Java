@@ -13,6 +13,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Business class handles the retrieval and ordering of training courses.
+ */
 public class FormationBusiness {
     /**
      * Formation DAO
@@ -43,7 +46,7 @@ public class FormationBusiness {
      * @return
      */
     public boolean orderFormation(Order order) throws EmptyArrayException {
-        if(order.getContains().isEmpty()) {
+        if (order.getContains().isEmpty()) {
             throw new EmptyArrayException();
         }
         try (Connection connection = DataBaseConfig.getConnection()) {

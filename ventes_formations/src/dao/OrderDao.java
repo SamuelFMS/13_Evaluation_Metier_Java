@@ -5,6 +5,9 @@ import models.Order;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Interface of table order sql request
+ */
 public interface OrderDao {
     /**
      * Create an order in the database

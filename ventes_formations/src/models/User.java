@@ -3,6 +3,9 @@ package models;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Model User contain all the informations of the User
+ */
 @Getter
 @Setter
 public class User {

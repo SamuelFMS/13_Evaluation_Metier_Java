@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * Display table but return an id on show
+ *
+ * @param <T>
+ */
 public class SearchTable<T extends TableRow> extends DisplayTable<T> {
     /**
      * Constructor by array

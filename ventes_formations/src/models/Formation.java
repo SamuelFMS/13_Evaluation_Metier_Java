@@ -6,6 +6,9 @@ import utils.TableRow;
 
 import java.math.BigDecimal;
 
+/**
+ * Model Formation contain all the informations of the Formation
+ */
 @Getter
 @Setter
 public class Formation implements TableRow {

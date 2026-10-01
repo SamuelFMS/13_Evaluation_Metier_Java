@@ -8,6 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Generic class for all the dao
+ *
+ * @param <T>
+ */
 public interface Dao<T> {
     /**
      * Default request to get all the Elements T

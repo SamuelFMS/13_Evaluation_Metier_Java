@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * Class to display the guest interface
+ */
 public class GuestView {
     public GuestView() {
     }
@@ -55,7 +58,7 @@ public class GuestView {
         try {
             displayTable.show(scanner, null);
         } catch (EmptyArrayException e) {
-           System.out.println("Aucune formation trouvé");
+            System.out.println("Aucune formation trouvé");
         }
     }
 
@@ -99,8 +102,7 @@ public class GuestView {
         if (user != null) {
             UserView userView = new UserView(user);
             userView.show(scanner, formationBusiness, userBusiness);
-        }
-        else{
+        } else {
             System.out.println("Erreur impossible de se connecter utilisateur/mdp incorrecte");
         }
     }

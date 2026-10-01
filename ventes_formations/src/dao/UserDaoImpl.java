@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * table User sql request
+ */
 public class UserDaoImpl implements UserDao, Dao<User> {
 
     @Override

@@ -2,6 +2,9 @@ package dao;
 
 import models.User;
 
+/**
+ * Interface of table User sql request
+ */
 public interface UserDao {
     /**
      * Check if a pseudonym is already exist return true if the case

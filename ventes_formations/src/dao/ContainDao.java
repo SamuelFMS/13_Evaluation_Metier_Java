@@ -5,6 +5,9 @@ import models.Contain;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Interface of contain sql request
+ */
 public interface ContainDao {
     /**
      * Create a contain in the database

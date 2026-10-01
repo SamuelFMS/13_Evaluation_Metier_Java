@@ -2,6 +2,9 @@ package utils;
 
 import lombok.Getter;
 
+/**
+ * Actions for the display table
+ */
 public class Actions {
     /**
      * Display information about this action

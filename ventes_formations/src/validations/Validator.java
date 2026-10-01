@@ -1,5 +1,8 @@
-package validation;
+package validations;
 
+/**
+ * Class containing all the validation regex
+ */
 public class Validator {
     /**
      * Check if the number that as been input have 10 decimal with potentially 2 number after

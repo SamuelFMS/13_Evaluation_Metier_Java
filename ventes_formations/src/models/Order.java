@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model Order contain all the informations of the Order
+ */
 @Getter
 @Setter
 public class Order {

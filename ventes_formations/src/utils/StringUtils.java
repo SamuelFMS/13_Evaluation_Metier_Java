@@ -1,5 +1,8 @@
 package utils;
 
+/**
+ * Class for manipulation of String
+ */
 public class StringUtils {
     private StringUtils() {
         /* This utility class should not be instantiated */

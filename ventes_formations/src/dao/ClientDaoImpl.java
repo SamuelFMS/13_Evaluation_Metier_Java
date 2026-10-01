@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+/**
+ * SQL request for table client
+ */
 public class ClientDaoImpl implements ClientDao, Dao<Client> {
     @Override
     public Client createClient(Client client) {
